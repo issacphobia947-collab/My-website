@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Support IT Choayb — كتاب أعطال الكمبيوتر والحلول</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --primary: #00d4ff;
+      --secondary: #0a0f1e;
+      --accent: #ff6b35;
+      --accent2: #7c3aed;
+      --gold: #ffd700;
+      --text: #e2e8f0;
+      --card-bg: rgba(255,255,255,0.04);
+      --border: rgba(0,212,255,0.2);
+      --glow: 0 0 40px rgba(0,212,255,0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--secondary);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ===== ANIMATED BG ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(124,58,237,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(0,212,255,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(255,107,53,0.05) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(10,15,30,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, var(--primary), var(--accent2));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: var(--glow);
+    }
+
+    .logo-text {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(226,232,240,0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 2px;
+      background: var(--primary);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--primary), var(--accent2));
+      color: #fff !important;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,212,255,0.4) !important;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 2rem 60px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,212,255,0.1);
+      border: 1px solid var(--border);
+      padding: 6px 18px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 2rem;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    .hero-badge .dot {
+      width: 8px; height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    .hero h1 {
+      font-family: 'Tajawal', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent2) 50%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: rgba(226,232,240,0.7);
+      max-width: 650px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+      animation: fadeInUp 0.8s ease 0.4s both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease 0.6s both;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent2));
+      color: white;
+      padding: 14px 36px;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 30px rgba(0,212,255,0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,212,255,0.5);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 14px 36px;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(0,212,255,0.05);
+    }
+
+    /* ===== BOOK MOCKUP ===== */
+    .book-mockup {
+      margin: 4rem auto 0;
+      position: relative;
+      width: 320px;
+      animation: float 3s ease-in-out infinite, fadeInUp 0.8s ease 0.8s both;
+    }
+
+    .book-cover {
+      width: 100%;
+      background: linear-gradient(135deg, #0f1f3d, #1a0a2e);
+      border-radius: 12px 4px 4px 12px;
+      padding: 40px 30px;
+      box-shadow:
+        -8px 8px 30px rgba(0,0,0,0.6),
+        0 0 60px rgba(0,212,255,0.15),
+        inset 0 0 40px rgba(0,212,255,0.05);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-right: 6px solid rgba(0,212,255,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .book-cover::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: conic-gradient(from 0deg, transparent 70%, rgba(0,212,255,0.05) 100%);
+      animation: rotate 8s linear infinite;
+    }
+
+    .book-cover-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: block;
+      position: relative;
+    }
+
+    .book-cover-title {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+
+    .book-cover-sub {
+      font-size: 0.85rem;
+      color: rgba(226,232,240,0.5);
+      position: relative;
+    }
+
+    .book-cover-author {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(0,212,255,0.2);
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 700;
+      position: relative;
+    }
+
+    /* ===== STATS ===== */
+    .stats {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(10px);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(0,212,255,0.15);
+    }
+
+    .stat-number {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      color: rgba(226,232,240,0.6);
+      margin-top: 0.5rem;
+    }
+
+    /* ===== SECTION HEADER ===== */
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      background: rgba(0,212,255,0.1);
+      border: 1px solid rgba(0,212,255,0.3);
+      color: var(--primary);
+      padding: 5px 16px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Tajawal', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
+
+    .section-title span {
+      background: linear-gradient(135deg, var(--primary), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-desc {
+      color: rgba(226,232,240,0.6);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* ===== CHAPTERS ===== */
+    .chapters-section {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .chapters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .chapter-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      transition: all 0.4s;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chapter-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent2));
+      transform: scaleX(0);
+      transition: transform 0.4s;
+    }
+
+    .chapter-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 25px 60px rgba(0,212,255,0.12);
+      border-color: rgba(0,212,255,0.4);
+    }
+
+    .chapter-card:hover::before { transform: scaleX(1); }
+
+    .chapter-icon {
+      width: 56px; height: 56px;
+      min-width: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+    }
+
+    .chapter-icon.blue { background: rgba(0,212,255,0.15); }
+    .chapter-icon.purple { background: rgba(124,58,237,0.15); }
+    .chapter-icon.orange { background: rgba(255,107,53,0.15); }
+    .chapter-icon.green { background: rgba(0,255,136,0.15); }
+    .chapter-icon.yellow { background: rgba(255,215,0,0.15); }
+    .chapter-icon.red { background: rgba(255,50,100,0.15); }
+
+    .chapter-info h3 {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .chapter-info p {
+      font-size: 0.88rem;
+      color: rgba(226,232,240,0.55);
+      line-height: 1.7;
+    }
+
+    .chapter-count {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-size: 0.78rem;
+      color: var(--primary);
+      background: rgba(0,212,255,0.1);
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-weight: 700;
+    }
+
+    /* ===== PROBLEMS SECTION ===== */
+    .problems-section {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 2rem;
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .problems-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .problems-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .problem-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.2rem 1.5rem;
+      transition: all 0.3s;
+    }
+
+    .problem-item:hover {
+      border-color: var(--primary);
+      background: rgba(0,212,255,0.05);
+      transform: translateX(-4px);
+    }
+
+    .problem-icon {
+      font-size: 1.5rem;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .problem-text h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .problem-text p {
+      font-size: 0.8rem;
+      color: rgba(226,232,240,0.5);
+    }
+
+    .problem-solved {
+      margin-right: auto;
+      font-size: 0.75rem;
+      color: #00ff88;
+      background: rgba(0,255,136,0.1);
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* ===== PREVIEW SECTION ===== */
+    .preview-section {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .preview-tabs {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: rgba(226,232,240,0.6);
+      padding: 10px 24px;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(124,58,237,0.2));
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .preview-content {
+      display: none;
+    }
+
+    .preview-content.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .solution-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .solution-box h3 {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .steps-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .steps-list li {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      min-width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--primary), var(--accent2));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: white;
+    }
+
+    .step-text {
+      padding-top: 5px;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: rgba(226,232,240,0.8);
+    }
+
+    /* ===== AUTHOR SECTION ===== */
+    .author-section {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 2rem;
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid var(--border);
+    }
+
+    .author-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .author-avatar {
+      width: 200px; height: 200px;
+      min-width: 200px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, var(--accent2), var(--primary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      box-shadow: 0 0 60px rgba(0,212,255,0.2);
+      position: relative;
+    }
+
+    .author-avatar::after {
+      content: '✓';
+      position: absolute;
+      bottom: -12px; left: -12px;
+      width: 36px; height: 36px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: white;
+      font-weight: 900;
+      box-shadow: 0 4px 15px rgba(255,107,53,0.5);
+    }
+
+    .author-info h2 {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+
+    .author-title {
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .author-bio {
+      color: rgba(226,232,240,0.65);
+      line-height: 1.9;
+      font-size: 0.98rem;
+    }
+
+    .author-skills {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .skill-tag {
+      background: rgba(0,212,255,0.1);
+      border: 1px solid rgba(0,212,255,0.25);
+      color: var(--primary);
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    /* ===== CTA ===== */
+    .cta-section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .cta-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(0,212,255,0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-box {
+      position: relative;
+      max-width: 700px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(10,15,30,0.9), rgba(20,10,40,0.9));
+      border: 1px solid rgba(0,212,255,0.3);
+      border-radius: 28px;
+      padding: 4rem 3rem;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 80px rgba(0,212,255,0.1);
+    }
+
+    .cta-box h2 {
+      font-family: 'Tajawal', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
+
+    .cta-box p {
+      color: rgba(226,232,240,0.65);
+      font-size: 1.05rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .price-tag {
+      display: inline-block;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-note {
+      font-size: 0.85rem;
+      color: rgba(226,232,240,0.45);
+      margin-bottom: 2rem;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: rgba(0,0,0,0.3);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .footer-text {
+      color: rgba(226,232,240,0.35);
+      font-size: 0.88rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 1.5rem 0;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: rgba(226,232,240,0.45);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--primary); }
+
+    /* ===== SCROLL TO TOP ===== */
+    .scroll-top {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 999;
+      width: 46px; height: 46px;
+      background: linear-gradient(135deg, var(--primary), var(--accent2));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0,212,255,0.4);
+      font-size: 1.2rem;
+      transition: transform 0.3s;
+      text-decoration: none;
+    }
+
+    .scroll-top:hover { transform: translateY(-3px); }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .author-inner { flex-direction: column; text-align: center; }
+      .author-skills { justify-content: center; }
+      .author-avatar { margin: 0 auto; }
+      .cta-box { padding: 2.5rem 1.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-logo">
+      <div class="logo-icon">💻</div>
+      <div class="logo-text">Support IT Choayb</div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#chapters">الفصول</a></li>
+      <li><a href="#problems">الأعطال</a></li>
+      <li><a href="#preview">معاينة</a></li>
+      <li><a href="#author">المؤلف</a></li>
+      <li><a href="#cta" class="nav-cta">تحميل الكتاب</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div>
+      <div class="hero-badge">
+        <span class="dot"></span>
+        الإصدار المحدّث — 2024
+      </div>
+      <h1>
+        دليلك الشامل<br/>
+        <span class="highlight">لإصلاح كل أعطال الكمبيوتر</span>
+      </h1>
+      <p>
+        كتاب احترافي يجمع بين الخبرة التقنية العملية والشرح المبسّط —
+        من إعداد <strong>Choayb</strong> لكل من يريد أن يصبح خبير دعم تقني.
+      </p>
+      <div class="hero-buttons">
+        <a href="#cta" class="btn-primary">📥 تحميل الكتاب PDF</a>
+        <a href="#chapters" class="btn-secondary">📖 استعراض المحتوى</a>
+      </div>
+      <div class="book-mockup">
+        <div class="book-cover">
+          <span class="book-cover-icon">🖥️</span>
+          <div class="book-cover-title">Support IT Choayb</div>
+          <div class="book-cover-sub">الدليل الشامل لأعطال الكمبيوتر وحلولها</div>
+          <div class="book-cover-author">✍️ بقلم: Choayb</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">200+</div>
+        <div class="stat-label">عطل موثّق بالحل</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">12</div>
+        <div class="stat-label">فصل تقني متخصص</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">500+</div>
+        <div class="stat-label">صفحة بمحتوى عملي</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">مبني على تجارب حقيقية</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTERS -->
+  <section class="chapters-section" id="chapters">
+    <div class="section-header">
+      <div class="section-tag">المحتوى</div>
+      <h2 class="section-title">ماذا يحتوي <span>الكتاب؟</span></h2>
+      <p class="section-desc">12 فصلاً مدروساً يغطي كل جانب من جوانب دعم تكنولوجيا المعلومات</p>
+    </div>
+    <div class="chapters-grid">
+      <div class="chapter-card">
+        <div class="chapter-icon blue">🔧</div>
+        <div class="chapter-info">
+          <h3>أعطال الأجهزة (Hardware)</h3>
+          <p>تشخيص وإصلاح مشاكل المعالج، الذاكرة، القرص الصلب، وبطاقة الشاشة</p>
+          <span class="chapter-count">42 عطل + حل</span>
+        </div>
+      </div>
+      <div class="chapter-card">
+        <div class="chapter-icon purple">💻</div>
+        <div class="chapter-info">
+          <h3>أعطال نظام التشغيل</h3>
+          <p>شاشة الموت الزرقاء، مشاكل التحديثات، تعارض البرامج، وملفات النظام</p>
+          <span class="chapter-count">38 عطل + حل</span>
+        </div>
+      </div>
+      <div class="chapter-card">
+        <div class="chapter-icon orange">🌐</div>
+        <div class="chapter-info">
+          <h3>مشاكل الشبكة والإنترنت</h3>
+          <p>انقطاع الاتصال، بطء الشبكة، إعدادات Wi-Fi، ومشاكل VPN</p>
+          <span class="chapter-count">30 عطل + حل</span>
+        </div>
+      </div>
+      <div class="chapter-card">
+        <div class="chapter-icon green">🛡️</div>
+        <div class="chapter-info">
+          <h3>الأمان والحماية</h3>
+          <p>إزالة الفيروسات، برامج التجسس، الحماية من الهجمات، وتأمين البيانات</p>
+          <span class="chapter-count">25 حالة + حل</span>
+        </div>
+      </div>
+      <div class="chapter-card">
+        <div class="chapter-icon yellow">🖨️</div>
+        <div class="chapter-info">
+          <h3>الطابعات والأجهزة الطرفية</h3>
+          <p>مشاكل الطباعة، تعريفات الأجهزة، ماوس ولوحة مفاتيح، وشاشات العرض</p>
+          <span class="chapter-count">20 عطل + حل</span>
+        </div>
+      </div>
+      <div class="chapter-card">
+        <div class="chapter-icon red">⚡</div>
+        <div class="chapter-info">
+          <h3>مشاكل الطاقة والتسخين</h3>
+          <p>ارتفاع الحرارة، مشاكل مصدر الطاقة، البطارية، والإغلاق المفاجئ</p>
+          <span class="chapter-count">18 عطل + حل</span>
+        </div>
+      </div>
+      <div class="chapter-card">
+        <div class="chapter-icon blue">🔄</div>
+        <div class="chapter-info">
+          <h3>النسخ الاحتياطي والاسترداد</h3>
+          <p>استرداد البيانات المحذوفة، صور النظام، وخطط الطوارئ</p>
+          <span class="chapter-count">15 سيناريو + حل</span>
+        </div>
+      </div>
+      <div class="chapter-card">
+        <div class="chapter-icon purple">📱</div>
+        <div class="chapter-info">
+          <h3>دعم الأجهزة المحمولة</h3>
+          <p>مزامنة الهاتف، مشاكل البلوتوث والـ USB، وإدارة الأجهزة عن بُعد</p>
+          <span class="chapter-count">22 عطل + حل</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEMS -->
+  <section class="problems-section" id="problems">
+    <div class="problems-inner">
+      <div class="section-header">
+        <div class="section-tag">الأعطال الشائعة</div>
+        <h2 class="section-title">كل هذه الأعطال <span>محلولة</span> في الكتاب</h2>
+        <p class="section-desc">قائمة بأبرز المشاكل التي ستجد لها حلاً خطوة بخطوة</p>
+      </div>
+      <div class="problems-list">
+        <div class="problem-item">
+          <span class="problem-icon">💀</span>
+          <div class="problem-text">
+            <h4>شاشة الموت الزرقاء (BSOD)</h4>
+            <p>أكثر من 15 سبب وحلول مفصّلة</p>
+          </div>
+          <span class="problem-solved">محلول ✓</span>
+        </div>
+        <div class="problem-item">
+          <span class="problem-icon">🐌</span>
+          <div class="problem-text">
+            <h4>بطء شديد في الجهاز</h4>
+            <p>تشخيص السبب الجذري وتحسين الأداء</p>
+          </div>
+          <span class="problem-solved">محلول ✓</span>
+        </div>
+        <div class="problem-item">
+          <span class="problem-icon">🔥</span>
+          <div class="problem-text">
+            <h4>ارتفاع درجة الحرارة</h4>
+            <p>التشخيص الحراري ومعالجة التسخين</p>
+          </div>
+          <span class="problem-solved">محلول ✓</span>
+        </div>
+        <div class="problem-item">
+          <span class="problem-icon">📶</span>
+          <div class="problem-text">
+            <h4>عدم الاتصال بالإنترنت</h4>
+            <p>خطوات الإصلاح من الكابل حتى DNS</p>
+          </div>
+          <span class="problem-solved">محلول ✓</span>
+        </div>
+        <div class="problem-item">
+          <span class="problem-icon">🔇</span>
+          <div class="problem-text">
+            <h4>مشاكل الصوت والمايكروفون</h4>
+            <p>تعريفات الصوت وإعدادات النظام</p>
+          </div>
+          <span class="problem-solved">محلول ✓</span>
+        </div>
+        <div class="problem-item">
+          <span class="problem-icon">🖥️</span>
+          <div class="problem-text">
+            <h4>لا صورة على الشاشة</h4>
+            <p>فحص بطاقة الشاشة والكابلات والبوست</p>
+          </div>
+          <span class="problem-solved">محلول ✓</span>
+        </div>
+        <div class="problem-item">
+          <span class="problem-icon">💾</span>
+          <div class="problem-text">
+            <h4>القرص الصلب لا يُقرأ</h4>
+            <p>استرداد البيانات وإصلاح التقسيمات</p>
+          </div>
+          <span class="problem-solved">محلول ✓</span>
+        </div>
+        <div class="problem-item">
+          <span class="problem-icon">🔌</span>
+          <div class="problem-text">
+            <h4>الجهاز لا يعمل أبداً</h4>
+            <p>تشخيص مصدر الطاقة واللوحة الأم</p>
+          </div>
+          <span class="problem-solved">محلول ✓</span>
+        </div>
+        <div class="problem-item">
+          <span class="problem-icon">🦠</span>
+          <div class="problem-text">
+            <h4>فيروسات وبرامج خبيثة</h4>
+            <p>إزالة شاملة واستعادة الأمان الكامل</p>
+          </div>
+          <span class="problem-solved">محلول ✓</span>
+        </div>
+        <div class="problem-item">
+          <span class="problem-icon">🔄</span>
+          <div class="problem-text">
+            <h4>Windows لا يعمل التحديث</h4>
+            <p>إصلاح Windows Update بالكامل</p>
+          </div>
+          <span class="problem-solved">محلول ✓</span>
+        </div>
+        <div class="problem-item">
+          <span class="problem-icon">🖨️</span>
+          <div class="problem-text">
+            <h4>الطابعة لا تطبع</h4>
+            <p>تشخيص Spooler والتعريفات والاتصال</p>
+          </div>
+          <span class="problem-solved">محلول ✓</span>
+        </div>
+        <div class="problem-item">
+          <span class="problem-icon">🔑</span>
+          <div class="problem-text">
+            <h4>نسيت كلمة المرور</h4>
+            <p>استعادة الوصول بطرق احترافية وآمنة</p>
+          </div>
+          <span class="problem-solved">محلول ✓</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREVIEW -->
+  <section class="preview-section" id="preview">
+    <div class="section-header">
+      <div class="section-tag">معاينة مجانية</div>
+      <h2 class="section-title">شاهد <span>أسلوب الحلول</span></h2>
+      <p class="section-desc">كيف يشرح الكتاب كل عطل بطريقة عملية واضحة</p>
+    </div>
+    <div class="preview-tabs">
+      <button class="tab-btn active" onclick="showTab('tab1', this)">💀 BSOD</button>
+      <button class="tab-btn" onclick="showTab('tab2', this)">🐌 بطء الجهاز</button>
+      <button class="tab-btn" onclick="showTab('tab3', this)">📶 مشاكل الشبكة</button>
+      <button class="tab-btn" onclick="showTab('tab4', this)">🔥 التسخين</button>
+    </div>
+
+    <div id="tab1" class="preview-content active">
+      <div class="solution-box">
+        <h3>💀 إصلاح شاشة الموت الزرقاء (BSOD)</h3>
+        <ul class="steps-list">
+          <li>
+            <span class="step-num">1</span>
+            <span class="step-text">افتح <strong>Event Viewer</strong> وابحث عن الخطأ في Windows Logs → System لمعرفة الكود الدقيق للعطل مثل <code>IRQL_NOT_LESS_OR_EQUAL</code></span>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <span class="step-text">شغّل أداة <strong>Memory Diagnostic</strong> (mdsched.exe) للتحقق من سلامة ذاكرة RAM — غالباً مصدر 60% من حالات BSOD</span>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <span class="step-text">نفّذ أمر <code>sfc /scannow</code> في CMD بصلاحيات المسؤول لفحص ملفات النظام التالفة واستعادتها تلقائياً</span>
+          </li>
+          <li>
+            <span class="step-num">4</span>
+            <span class="step-text">تحقق من التعريفات الحديثة خاصةً <strong>بطاقة الشاشة والشبكة</strong> — التعارض مع تعريفات قديمة سبب شائع جداً</span>
+          </li>
+          <li>
+            <span class="step-num">5</span>
+            <span class="step-text">إن استمر المشكل، استخدم <strong>System Restore</strong> للرجوع لنقطة ثابتة، أو تحليل ملف <code>minidump</code> بـ WinDbg</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="tab2" class="preview-content">
+      <div class="solution-box">
+        <h3>🐌 إصلاح البطء الشديد في الجهاز</h3>
+        <ul class="steps-list">
+          <li>
+            <span class="step-num">1</span>
+            <span class="step-text">افتح <strong>Task Manager</strong> (Ctrl+Shift+Esc) وراقب استخدام CPU, RAM, Disk — حدّد أي منها يصل لـ 100%</span>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <span class="step-text">عطّل البرامج غير الضرورية من بدء التشغيل عبر Task Manager → Startup لتسريع الإقلاع بشكل كبير</span>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <span class="step-text">إن كانت نسبة الـ Disk عالية، افحص <strong>Superfetch/SysMain</strong> وخدمة <strong>Windows Search</strong> وأوقفهما مؤقتاً</span>
+          </li>
+          <li>
+            <span class="step-num">4</span>
+            <span class="step-text">نظّف الملفات المؤقتة بـ <code>%temp%</code> و<code>cleanmgr</code> — قد تحرر جيجابايتات وتخفف الضغط على القرص</span>
+          </li>
+          <li>
+            <span class="step-num">5</span>
+            <span class="step-text">إن كان القرص HDD قديماً، الترقية لـ <strong>SSD</strong> هي الحل الجذري الأسرع والأضمن على الإطلاق</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="tab3" class="preview-content">
+      <div class="solution-box">
+        <h3>📶 إصلاح مشاكل الاتصال بالإنترنت</h3>
+        <ul class="steps-list">
+          <li>
+            <span class="step-num">1</span>
+            <span class="step-text">جرّب <code>ping 8.8.8.8</code> أولاً — إن نجحت فالمشكلة في DNS وليس في الاتصال ذاته</span>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <span class="step-text">نفّذ <code>netsh winsock reset</code> ثم <code>ipconfig /flushdns</code> وأعد تشغيل الجهاز — يحل 40% من الحالات</span>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <span class="step-text">تحقق من تعريف بطاقة الشبكة في Device Manager — إشارة تحذير صفراء تعني تعارض أو تعريف معطوب</span>
+          </li>
+          <li>
+            <span class="step-num">4</span>
+            <span class="step-text">للـ Wi-Fi، جرّب نسيان الشبكة وإعادة الاتصال، وتغيير قناة الراوتر من 2.4GHz إلى 5GHz إن كان مدعوماً</span>
+          </li>
+          <li>
+            <span class="step-num">5</span>
+            <span class="step-text">اضبط DNS يدوياً على <strong>8.8.8.8 / 8.8.4.4</strong> (Google) أو <strong>1.1.1.1</strong> (Cloudflare) لتحسين الاستقرار</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="tab4" class="preview-content">
+      <div class="solution-box">
+        <h3>🔥 إصلاح مشكلة ارتفاع الحرارة</h3>
+        <ul class="steps-list">
+          <li>
+            <span class="step-num">1</span>
+            <span class="step-text">ثبّت <strong>HWMonitor</strong> أو <strong>Core Temp</strong> لمراقبة درجات الحرارة — المعالج يجب ألا يتجاوز 85°C تحت الحمل</span>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <span class="step-text">افتح الجهاز ونظّف المروحة والمشتت بهواء مضغوط — الغبار يقلل الكفاءة الحرارية بنسبة تصل لـ 50%</span>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <span class="step-text">استبدل <strong>Thermal Paste</strong> على المعالج إن مضى أكثر من 3-4 سنوات — هذا وحده يخفض الحرارة 15-25 درجة</span>
+          </li>
+          <li>
+            <span class="step-num">4</span>
+            <span class="step-text">تحقق من أن مراوح الكيس تعمل وفق اتجاه صحيح — هواء يدخل من الأمام، يخرج من الخلف والأعلى</span>
+          </li>
+          <li>
+            <span class="step-num">5</span>
+            <span class="step-text">فعّل <strong>Power Plan</strong> المتوازن بدلاً من High Performance إذا كنت لا تحتاجه، يقلل الحرارة والضجيج</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTHOR -->
+  <section class="author-section" id="author">
+    <div class="section-header">
+      <div class="section-tag">المؤلف</div>
+      <h2 class="section-title">من هو <span>Choayb؟</span></h2>
+    </div>
+    <div class="author-inner">
+      <div class="author-avatar">👨‍💻</div>
+      <div class="author-info">
+        <h2>Choayb</h2>
+        <div class="author-title">🏆 متخصص دعم تكنولوجيا المعلومات</div>
+        <p class="author-bio">
+          خبير تقني متخصص في دعم تكنولوجيا المعلومات وإصلاح الأجهزة، مع خبرة عملية واسعة
+          في تشخيص الأعطال وتقديم الحلول السريعة والفعّالة. طوّر هذا الكتاب بناءً على
+          آلاف الحالات الحقيقية التي واجهها، ليكون مرجعاً عملياً يسهّل على أي شخص
+          فهم أعطال الكمبيوتر والتعامل معها بثقة واحتراف.
+        </p>
+        <div class="author-skills">
+          <span class="skill-tag">Windows Support</span>
+          <span class="skill-tag">Hardware Repair</span>
+          <span class="skill-tag">Network Troubleshooting</span>
+          <span class="skill-tag">Cybersecurity</span>
+          <span class="skill-tag">Data Recovery</span>
+          <span class="skill-tag">System Administration</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta">
+    <div class="cta-glow"></div>
+    <div class="cta-box">
+      <h2>جاهز تصبح خبير IT؟</h2>
+      <p>احصل على نسختك من الكتاب الآن وابدأ رحلتك في عالم دعم تكنولوجيا المعلومات</p>
+      <div class="price-tag">مجاني 🎁</div>
+      <div class="price-note">أو بالسعر الذي يقرره المؤلف — راسله مباشرة</div>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="#" class="btn-primary" style="font-size:1.1rem; padding:16px 40px;">
+          📥 تحميل PDF الآن
+        </a>
+        <a href="#chapters" class="btn-secondary">
+          📖 استعراض الفصول
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Support IT Choayb</div>
+    <ul class="footer-links">
+      <li><a href="#chapters">الفصول</a></li>
+      <li><a href="#problems">الأعطال</a></li>
+      <li><a href="#preview">معاينة</a></li>
+      <li><a href="#author">المؤلف</a></li>
+      <li><a href="#cta">تحميل</a></li>
+    </ul>
+    <p class="footer-text">© 2024 Support IT Choayb — جميع الحقوق محفوظة</p>
+  </footer>
+
+  <!-- SCROLL TOP -->
+  <a href="#" class="scroll-top">↑</a>
+
+  <script>
+    function showTab(tabId, btn) {
+      document.querySelectorAll('.preview-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.chapter-card, .stat-card, .problem-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
